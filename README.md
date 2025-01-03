@@ -21,13 +21,13 @@ PostPulse integrates LangFlow to orchestrate the data processing pipeline. Below
 
 **Workflow Steps:**
 
-1. **Take input** Take input from the user
-2. **Retrieve data** Retrieve data from the Astra DB
-3. **Extract UserId** Extract the UserId from the given input text
-4. **Filter data** Filter the retrieved data using the userId
-5. **Calculate averages** Calculate the averages by post types
-6. **Input to model** Give the input to the model
-7. **Retrieve output** Retrieve output from the model
+1. **Take input** : Take input from the user
+2. **Retrieve data** : Retrieve data from the Astra DB
+3. **Extract UserId** : Extract the UserId from the given input text
+4. **Filter data** : Filter the retrieved data using the userId
+5. **Calculate averages** : Calculate the averages by post types
+6. **Input to model** : Give the input to the model
+7. **Retrieve output** : Retrieve output from the model
 
 ### **3. Data Storage with Astra DB:**
 
