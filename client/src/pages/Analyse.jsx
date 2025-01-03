@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { JsonView, allExpanded, darkStyles } from "react-json-view-lite";
 import "react-json-view-lite/dist/index.css";
 import FileUploadRoundedIcon from "@mui/icons-material/FileUploadRounded";
+import AutoGraphRoundedIcon from "@mui/icons-material/AutoGraphRounded";
 
 const InputComponent = ({ setAnalyzedText, tab }) => {
   const [URL, setURL] = useState(
@@ -176,12 +177,12 @@ const InputComponent = ({ setAnalyzedText, tab }) => {
 
       <div className="flex items-center space-x-5 mt-6">
         <button
-          className={`px-8 py-2 rounded-md bg-blue-700 text-white  ${
+          className={`px-8 py-2 rounded-md bg-blue-700 text-white flex items-center space-x-3  ${
             posts.length == 0 && "brightness-50 cursor-not-allowed"
           }`}
           onClick={saveAndAnalyze}
         >
-          Analyze
+          <p> Analyze </p> <AutoGraphRoundedIcon />
         </button>
 
         <div>
