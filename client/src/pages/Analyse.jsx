@@ -6,7 +6,7 @@ import AutoGraphRoundedIcon from "@mui/icons-material/AutoGraphRounded";
 
 const InputComponent = ({ setAnalyzedText, tab }) => {
   const [URL, setURL] = useState(
-    "http://localhost:8000/demo-posts?userid=gaage"
+    "https://postpulse.ronakpaul.com/demo-posts?userid=ageage"
   );
 
   const fileInputRef = useRef(null);
@@ -35,13 +35,16 @@ const InputComponent = ({ setAnalyzedText, tab }) => {
 
   const savePosts = async () => {
     try {
-      const response = await fetch("http://localhost:8000/put-posts", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ posts }),
-      });
+      const response = await fetch(
+        "https://postpulse.ronakpaul.com/put-posts",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ posts }),
+        }
+      );
     } catch (e) {
       console.log("Error in analyzing the data");
     }
@@ -54,7 +57,7 @@ const InputComponent = ({ setAnalyzedText, tab }) => {
         data: [],
       });
       const response = await fetch(
-        `http://localhost:8000/analyse-posts?userid=gaage&ptype=${postType}`
+        `https://postpulse.ronakpaul.com/analyse-posts?userid=gaage&ptype=${postType}`
       );
 
       const data = await response.json();
@@ -121,6 +124,10 @@ const InputComponent = ({ setAnalyzedText, tab }) => {
         <div className="w-full flex items-center space-x-3">
           <input
             type="text"
+            value={URL}
+            onChange={(e) => {
+              setURL(e.target.value);
+            }}
             className="w-full bg-black py-2 px-3 rounded-md text-white placeholder:text-slate-500 outline-none"
             placeholder="URL"
           />
