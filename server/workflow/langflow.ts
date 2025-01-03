@@ -3,11 +3,23 @@ import dotenv from "dotenv";
 dotenv.config();
 
 class LangflowClient {
-  constructor(baseURL, applicationToken) {
+  baseURL: string;
+  applicationToken: string;
+
+  constructor(baseURL: string, applicationToken: string) {
     this.baseURL = baseURL;
     this.applicationToken = applicationToken;
   }
-  async post(endpoint, body, headers = { "Content-Type": "application/json" }) {
+  async post(
+    endpoint: string,
+    body: {
+      input_value: string;
+      input_type: string;
+      output_type: string;
+      tweaks: Object;
+    },
+    headers = { "Content-Type": "application/json" }
+  ) {
     headers["Authorization"] = `Bearer ${this.applicationToken}`;
     headers["Content-Type"] = "application/json";
     const url = `${this.baseURL}${endpoint}`;
@@ -34,9 +46,9 @@ class LangflowClient {
   }
 
   async initiateSession(
-    flowId,
-    langflowId,
-    inputValue,
+    flowId: string,
+    langflowId: string,
+    inputValue: string,
     inputType = "chat",
     outputType = "chat",
     stream = false,
@@ -51,7 +63,12 @@ class LangflowClient {
     });
   }
 
-  handleStream(streamUrl, onUpdate, onClose, onError) {
+  handleStream(
+    streamUrl: string,
+    onUpdate: Function,
+    onClose: Function,
+    onError: Function
+  ) {
     const eventSource = new EventSource(streamUrl);
 
     eventSource.onmessage = (event) => {
@@ -74,16 +91,16 @@ class LangflowClient {
   }
 
   async runFlow(
-    flowIdOrName,
-    langflowId,
-    inputValue,
+    flowIdOrName: string,
+    langflowId: string,
+    inputValue: string,
     inputType = "chat",
     outputType = "chat",
     tweaks = {},
     stream = false,
-    onUpdate,
-    onClose,
-    onError
+    onUpdate: Function,
+    onClose: Function,
+    onError: Function
   ) {
     try {
       const initResponse = await this.initiateSession(
@@ -116,7 +133,7 @@ class LangflowClient {
 }
 
 export async function runAIWorkFlow(
-  inputValue,
+  inputValue: string,
   inputType = "chat",
   outputType = "chat",
   stream = false
@@ -140,9 +157,9 @@ export async function runAIWorkFlow(
       outputType,
       tweaks,
       stream,
-      (data) => console.log("Received:", data.chunk), // onUpdate
-      (message) => console.log("Stream Closed:", message), // onClose
-      (error) => console.log("Stream Error:", error) // onError
+      (data: any) => console.log("Received:", data.chunk), // onUpdate
+      (message: any) => console.log("Stream Closed:", message), // onClose
+      (error: any) => console.log("Stream Error:", error) // onError
     );
     if (!stream && response && response.outputs) {
       const flowOutputs = response.outputs[0];
