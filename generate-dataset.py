@@ -3,7 +3,7 @@ import random
 
 
 POST_TYPES = ['carousel', 'reel', 'static image']
-NUM_RECORDS = 100
+NUM_RECORDS = 10
 
 USER_IDs = ['ga97ag','6aah4','646ag','626ah27']
 

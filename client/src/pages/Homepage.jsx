@@ -26,6 +26,9 @@ const Homepage = () => {
           <img src={SOCIAL_MEDIA_IMG} alt="social media platform images" />
         </div>
       </div>
+
+      {/* How it works youtube video */}
+      <div></div>
     </div>
   );
 };
