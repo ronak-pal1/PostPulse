@@ -75,3 +75,13 @@ app.get("/analyse-posts", async (req: Request, res: Response) => {
 app.listen(PORT, () => {
   console.log("Server is listening in the port " + PORT);
 });
+
+// for chatting with the model
+app.post("/chat", async (req: Request, res: Response) => {
+  const userId: string = req.body.userid as string;
+  const prompt: string = req.body.prompt as string;
+
+  const response = await runAIWorkFlow(`My user id ${userId} . ${prompt}`);
+
+  res.status(200).json({ response });
+});
