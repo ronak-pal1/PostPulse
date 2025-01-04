@@ -18,6 +18,7 @@ const Header = () => {
 
       <div className="flex items-center space-x-4">
         <Link
+          target="_blank"
           to={"https://github.com/ronak-pal1/PostPulse"}
           className="px-8 py-2 rounded-md bg-gradient-to-r from-neutral-900 to-black text-white hover:shadow-xl transition duration-200 text-base border border-neutral-800 flex items-center space-x-4"
         >

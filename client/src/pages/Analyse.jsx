@@ -3,6 +3,8 @@ import { JsonView, allExpanded, darkStyles } from "react-json-view-lite";
 import "react-json-view-lite/dist/index.css";
 import FileUploadRoundedIcon from "@mui/icons-material/FileUploadRounded";
 import AutoGraphRoundedIcon from "@mui/icons-material/AutoGraphRounded";
+import ChatBubbleRoundedIcon from "@mui/icons-material/ChatBubbleRounded";
+import ChatModal from "../components/ChatModal";
 
 const InputComponent = ({ setAnalyzedText, tab }) => {
   const [URL, setURL] = useState(
@@ -216,6 +218,8 @@ const Analyse = () => {
     data: [],
   });
 
+  const [isChatModalHidden, setIsChatModalHidden] = useState(true);
+
   /*
 
         You are a helpfull assitance for social media post analysis. Total post types: reels, carousel, static image. Your task is to analyze the post and give simple insights. For example: Carousel posts have 20% higher engagement than static images, Reels drive 2x more comments compared to other formats. (Only in this format) Also if there is no post of one type that mention that as well. Make it as array of insights so that I can process it on my end.
@@ -223,6 +227,11 @@ const Analyse = () => {
 
   return (
     <div className="h-screen flex flex-1">
+      <ChatModal
+        isHidden={isChatModalHidden}
+        setIsHidden={setIsChatModalHidden}
+      />
+
       <div className="h-full w-full flex-[0.5] flex items-center justify-center">
         <div className="h-3/4 w-full mt-3 mx-7">
           <p className="text-white text-xl font-medium py-3">
@@ -279,6 +288,13 @@ const Analyse = () => {
             )}
           </div>
         )}
+      </div>
+
+      <div
+        className="absolute bottom-10 right-10 w-fit bg-zinc-900 p-3 rounded-full cursor-pointer"
+        onClick={() => setIsChatModalHidden(!isChatModalHidden)}
+      >
+        <ChatBubbleRoundedIcon className="text-violet-600" fontSize="medium" />
       </div>
     </div>
   );

@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import SOCIAL_MEDIA_IMG from "../assets/social-media.png";
 import TEAMLOGO from "../assets/cobalt.png";
 import AutoGraphRoundedIcon from "@mui/icons-material/AutoGraphRounded";
-
+import Thumbnail from "../assets/thumbnail.png";
 const Homepage = () => {
   const navigate = useNavigate();
 
@@ -39,7 +39,7 @@ const Homepage = () => {
           actually working at the back
         </p>
 
-        <iframe
+        {/* <iframe
           width="760"
           height="415"
           src="https://www.youtube.com/embed/lVvP18dV_J0?si=ZnzC9DIzmtL7DD0t"
@@ -48,7 +48,11 @@ const Homepage = () => {
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
           referrerpolicy="strict-origin-when-cross-origin"
           allowfullscreen
-        ></iframe>
+        ></iframe> */}
+
+        <div className="width-[760px]">
+          <img src={Thumbnail} alt="youtube thumbnail" width={"760px"} />
+        </div>
       </div>
 
       <footer className="h-fit py-4  px-9 w-full bg-neutral-950">
