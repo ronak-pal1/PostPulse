@@ -39,20 +39,20 @@ const Homepage = () => {
           actually working at the back
         </p>
 
-        {/* <iframe
+        <iframe
           width="760"
           height="415"
-          src="https://www.youtube.com/embed/lVvP18dV_J0?si=ZnzC9DIzmtL7DD0t"
+          src="https://www.youtube.com/embed/8VICapn_imw?si=KKvdzGgcEJuOG7-x"
           title="YouTube video player"
           frameborder="0"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
           referrerpolicy="strict-origin-when-cross-origin"
           allowfullscreen
-        ></iframe> */}
+        ></iframe>
 
-        <div className="width-[760px]">
+        {/* <div className="width-[760px]">
           <img src={Thumbnail} alt="youtube thumbnail" width={"760px"} />
-        </div>
+        </div> */}
       </div>
 
       <footer className="h-fit py-4  px-9 w-full bg-neutral-950">
