@@ -5,11 +5,23 @@ import FileUploadRoundedIcon from "@mui/icons-material/FileUploadRounded";
 import AutoGraphRoundedIcon from "@mui/icons-material/AutoGraphRounded";
 import ChatBubbleRoundedIcon from "@mui/icons-material/ChatBubbleRounded";
 import ChatModal from "../components/ChatModal";
+import ShortUniqueId from "short-unique-id";
+
+const uid = new ShortUniqueId({ length: 7 });
 
 const InputComponent = ({ setAnalyzedText, tab, setId }) => {
   const [inputURL, setInputURL] = useState(
     "https://postpulse.ronakpaul.com/demo-posts?userid=ageage&n=10"
   );
+
+  useEffect(() => {
+    const randomID = uid.rnd();
+
+    setInputURL(
+      `https://postpulse.ronakpaul.com/demo-posts?userid=${randomID}&n=10`
+    );
+  }, []);
+
   const [userID, setUserID] = useState("");
   const fileInputRef = useRef(null);
 
