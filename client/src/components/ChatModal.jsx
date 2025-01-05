@@ -3,7 +3,7 @@ import SendRoundedIcon from "@mui/icons-material/SendRounded";
 import ChatBubbleRoundedIcon from "@mui/icons-material/ChatBubbleRounded";
 import { useState } from "react";
 
-const ChatModal = ({ isHidden, setIsHidden }) => {
+const ChatModal = ({ isHidden, setIsHidden, userid }) => {
   // type: Human
   // type: AI
   //  structure: {type,text}
@@ -12,14 +12,19 @@ const ChatModal = ({ isHidden, setIsHidden }) => {
   const [isThinking, setIsThinking] = useState(false);
 
   const fetchAIResponse = async (prompt) => {
+    if (!userid) {
+      return;
+    }
+
     setIsThinking(true);
+
     try {
       const response = await fetch("https://postpulse.ronakpaul.com/chat", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ userid: "gaage", prompt }),
+        body: JSON.stringify({ userid, prompt }),
       });
 
       const data = await response.json();
@@ -30,7 +35,6 @@ const ChatModal = ({ isHidden, setIsHidden }) => {
           type: "AI",
           text: data.response,
         });
-        console.log(chatHistory);
         setChatHistory(tempHistory);
       }
     } catch (e) {
@@ -88,6 +92,13 @@ const ChatModal = ({ isHidden, setIsHidden }) => {
                 <p className="text-white">{history.text}</p>
               </div>
             ))}
+            {isThinking && (
+              <div className="w-[200px] mr-auto  px-5 py-3">
+                <p className="bg-gradient-to-r from-orange-400  to-indigo-400 inline-block text-transparent bg-clip-text">
+                  Flow running...
+                </p>
+              </div>
+            )}
           </div>
 
           <div className="flex-[0.1] w-full flex items-center justify-center">

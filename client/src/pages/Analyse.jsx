@@ -6,12 +6,19 @@ import AutoGraphRoundedIcon from "@mui/icons-material/AutoGraphRounded";
 import ChatBubbleRoundedIcon from "@mui/icons-material/ChatBubbleRounded";
 import ChatModal from "../components/ChatModal";
 
-const InputComponent = ({ setAnalyzedText, tab }) => {
-  const [URL, setURL] = useState(
-    "https://postpulse.ronakpaul.com/demo-posts?userid=ageage"
+const InputComponent = ({ setAnalyzedText, tab, setId }) => {
+  const [inputURL, setInputURL] = useState(
+    "https://postpulse.ronakpaul.com/demo-posts?userid=ageage&n=10"
   );
-
+  const [userID, setUserID] = useState("");
   const fileInputRef = useRef(null);
+
+  const [loadingState, setLoadingState] = useState({
+    isLoading: false,
+    text: "",
+  });
+
+  const [isFetching, setIsFetching] = useState(false);
 
   const [postType, setPostType] = useState("reel");
 
@@ -24,15 +31,34 @@ const InputComponent = ({ setAnalyzedText, tab }) => {
   };
 
   const fetchPosts = async () => {
+    if (isFetching) return;
+
     try {
-      const response = await fetch(URL);
+      const parsedUrl = new URL(inputURL);
+
+      // Extract the userid parameter
+      const params = new URLSearchParams(parsedUrl.search);
+      const userid = params.get("userid");
+
+      if (!userid) return;
+      else {
+        setUserID(userid);
+        setId(userid);
+      }
+
+      setIsFetching(true);
+
+      const response = await fetch(inputURL);
 
       const data = await response.json();
 
       setPosts(data.posts);
     } catch (e) {
+      console.log(e);
       console.log("Error in fetching posts");
     }
+
+    setIsFetching(false);
   };
 
   const savePosts = async () => {
@@ -59,7 +85,7 @@ const InputComponent = ({ setAnalyzedText, tab }) => {
         data: [],
       });
       const response = await fetch(
-        `https://postpulse.ronakpaul.com/analyse-posts?userid=gaage&ptype=${postType}`
+        `https://postpulse.ronakpaul.com/analyse-posts?userid=${userID}&ptype=${postType}`
       );
 
       const data = await response.json();
@@ -78,9 +104,26 @@ const InputComponent = ({ setAnalyzedText, tab }) => {
   };
 
   const saveAndAnalyze = async () => {
-    // if (posts.length == 0) return;
-    // await savePosts();
+    if (posts.length == 0 || loadingState.isLoading) return;
+
+    setLoadingState({
+      isLoading: true,
+      text: "Saving...",
+    });
+
+    await savePosts();
+
+    setLoadingState({
+      isLoading: true,
+      text: "Analyzing...",
+    });
+
     await analyze();
+
+    setLoadingState({
+      isLoading: false,
+      text: "",
+    });
   };
 
   useEffect(() => {
@@ -126,9 +169,9 @@ const InputComponent = ({ setAnalyzedText, tab }) => {
         <div className="w-full flex items-center space-x-3">
           <input
             type="text"
-            value={URL}
+            value={inputURL}
             onChange={(e) => {
-              setURL(e.target.value);
+              setInputURL(e.target.value);
             }}
             className="w-full bg-black py-2 px-3 rounded-md text-white placeholder:text-slate-500 outline-none"
             placeholder="URL"
@@ -172,7 +215,11 @@ const InputComponent = ({ setAnalyzedText, tab }) => {
               : "overflow-y-scroll no-scrollbar"
           }`}
         >
-          {posts.length == 0 ? (
+          {isFetching ? (
+            <p className="bg-gradient-to-r from-orange-400  to-indigo-400 inline-block text-transparent bg-clip-text">
+              Fetching...
+            </p>
+          ) : posts.length == 0 ? (
             <p className="text-slate-500">No fetched data </p>
           ) : (
             <JsonView
@@ -191,7 +238,13 @@ const InputComponent = ({ setAnalyzedText, tab }) => {
           }`}
           onClick={saveAndAnalyze}
         >
-          <p> Analyze </p> <AutoGraphRoundedIcon />
+          {loadingState.isLoading ? (
+            <p>{loadingState.text}</p>
+          ) : (
+            <>
+              <p> Analyze </p> <AutoGraphRoundedIcon />
+            </>
+          )}
         </button>
 
         <div>
@@ -217,6 +270,7 @@ const Analyse = () => {
     isAnalyzing: false,
     data: [],
   });
+  const [id, setId] = useState("");
 
   const [isChatModalHidden, setIsChatModalHidden] = useState(true);
 
@@ -230,6 +284,7 @@ const Analyse = () => {
       <ChatModal
         isHidden={isChatModalHidden}
         setIsHidden={setIsChatModalHidden}
+        userid={id}
       />
 
       <div className="h-full w-full flex-[0.5] flex items-center justify-center">
@@ -267,6 +322,7 @@ const Analyse = () => {
               <InputComponent
                 setAnalyzedText={setAnalyzedText}
                 tab={currentTab}
+                setId={setId}
               />
             </div>
           </div>
