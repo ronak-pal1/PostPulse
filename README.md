@@ -93,7 +93,7 @@ PostPulse integrates LangFlow to orchestrate the data processing pipeline. Below
 
 ## **Demo video**
 
-🎥 Watch the complete demo of PostPulse on YouTube: [Walkthough video](https://www.genome.gov/)
+🎥 Watch the complete demo of PostPulse on YouTube: [Walkthough video](https://www.youtube.com/watch?v=8VICapn_imw)
 
 ---
 
